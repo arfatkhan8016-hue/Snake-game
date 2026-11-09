@@ -1,0 +1,52 @@
+name: Build & Test Snake Game
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  DOTNET_NOLOGO: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+jobs:
+  build-and-test:
+    name: Build & Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore SnakeGame/SnakeGame.csproj
+
+      - name: Build (Release)
+        run: dotnet build SnakeGame/SnakeGame.csproj --configuration Release --no-restore
+
+      - name: Run Tests (non-interactive mode)
+        run: dotnet run --project SnakeGame/SnakeGame.csproj --configuration Release --no-build -- --test
+
+      - name: Publish artifact
+        if: matrix.os == 'ubuntu-latest'
+        run: dotnet publish SnakeGame/SnakeGame.csproj -c Release -o ./publish
+
+      - name: Upload build artifact
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: snake-game-${{ matrix.os }}
+          path: ./publish
+          retention-days: 14
