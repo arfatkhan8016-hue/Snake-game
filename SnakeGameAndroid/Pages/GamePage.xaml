@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SnakeGameAndroid.Pages.GamePage"
+             BackgroundColor="#0d1b2a"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Score Header -->
+        <Grid Grid.Row="0" Padding="16" ColumnDefinitions="Auto,*" BackgroundColor="#1b263b">
+            <Label x:Name="ScoreLabel"
+                   Text="Score: 0"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   TextColor="#ffd60a"
+                   VerticalOptions="Center" />
+            <Button Grid.Column="1"
+                    Text="Restart"
+                    HorizontalOptions="End"
+                    BackgroundColor="#2dc653"
+                    TextColor="Black"
+                    FontAttributes="Bold"
+                    CornerRadius="8"
+                    Clicked="OnRestartClicked" />
+        </Grid>
+
+        <!-- Game Canvas -->
+        <GraphicsView x:Name="GameCanvas"
+                      Grid.Row="1"
+                      Margin="8" />
+
+        <!-- D-Pad Controls -->
+        <Grid Grid.Row="2" Padding="16" RowDefinitions="Auto,Auto,Auto"
+              HorizontalOptions="Center" ColumnSpacing="8" RowSpacing="8">
+
+            <Button Grid.Row="0" Grid.Column="1"
+                    Text="▲" FontSize="28"
+                    WidthRequest="80" HeightRequest="70"
+                    BackgroundColor="#2dc653" TextColor="Black"
+                    CornerRadius="12"
+                    Clicked="OnUpClicked" />
+
+            <Button Grid.Row="1" Grid.Column="0"
+                    Text="◀" FontSize="28"
+                    WidthRequest="80" HeightRequest="70"
+                    BackgroundColor="#2dc653" TextColor="Black"
+                    CornerRadius="12"
+                    Clicked="OnLeftClicked" />
+
+            <Button Grid.Row="1" Grid.Column="1"
+                    Text="⏸" FontSize="24"
+                    WidthRequest="80" HeightRequest="70"
+                    BackgroundColor="#ffd60a" TextColor="Black"
+                    CornerRadius="12"
+                    Clicked="OnPauseClicked" />
+
+            <Button Grid.Row="1" Grid.Column="2"
+                    Text="▶" FontSize="28"
+                    WidthRequest="80" HeightRequest="70"
+                    BackgroundColor="#2dc653" TextColor="Black"
+                    CornerRadius="12"
+                    Clicked="OnRightClicked" />
+
+            <Button Grid.Row="2" Grid.Column="1"
+                    Text="▼" FontSize="28"
+                    WidthRequest="80" HeightRequest="70"
+                    BackgroundColor="#2dc653" TextColor="Black"
+                    CornerRadius="12"
+                    Clicked="OnDownClicked" />
+        </Grid>
+    </Grid>
+</ContentPage>
